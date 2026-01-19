@@ -3,22 +3,6 @@ import { createDefaultLmStudioClient, LmStudioClient } from './lmStudioClient';
 import { GetSolutionRequestBody, GetSolutionResponseBody } from '../types/api.types';
 import {extractMarkedJsonFromText} from "./taskGenerationService";
 
-// function extractMarkedJsonFromText(text: string): unknown {
-//     const beginMarker = 'BEGIN_JSON';
-//     const endMarker = 'END_JSON';
-//
-//     const beginIndex = text.indexOf(beginMarker);
-//     const endIndex = text.indexOf(endMarker);
-//
-//     if (beginIndex === -1 || endIndex === -1 || endIndex <= beginIndex) {
-//         throw new Error('Model response does not contain JSON markers');
-//     }
-//
-//     const jsonText = text.slice(beginIndex + beginMarker.length, endIndex).trim();
-//
-//     return JSON.parse(jsonText);
-// }
-
 async function repairMarkedJsonWithModel(
     lmStudioClient: LmStudioClient,
     invalidText: string,
