@@ -135,9 +135,9 @@
 //
 //
 
-import { Request, Response } from 'express';
-import { createDefaultLmStudioClient, LmStudioClient } from './lmStudioClient';
-import { GenerateTaskRequestBody, GenerateTaskResponseBody } from '../types/api.types';
+import {Request, Response} from 'express';
+import {createDefaultLmStudioClient, LmStudioClient} from './lmStudioClient';
+import {GenerateTaskRequestBody, GenerateTaskResponseBody} from '../types/api.types';
 
 /**
  * Извлекает JSON строго между маркерами BEGIN_JSON и END_JSON.
@@ -168,16 +168,23 @@ type GenerationContext = {
 
 function buildGenerationMessages(context: GenerationContext) {
     const systemMessage =
-        'Ты генератор задач по программированию для тренажёра. ' +
-        'Верни ответ строго между маркерами BEGIN_JSON и END_JSON. ' +
+        'Ты генератор учебных задач по программированию для тренажёра. ' +
+        'Возвращай ответ строго между маркерами BEGIN_JSON и END_JSON. ' +
         'Внутри должен быть один валидный JSON-объект. ' +
-        'Строго используй двойные кавычки для ключей и строк. ' +
-        'Запрещены markdown, комментарии, хвостовые запятые и любой текст вне маркеров.';
+        'ВСЕ текстовые поля (title, statement, constraints, examples, solutionOutline) ' +
+        'ДОЛЖНЫ БЫТЬ НА РУССКОМ ЯЗЫКЕ. ' +
+        'Код (starterCode) должен быть на языке программирования. ' +
+        'Строго двойные кавычки. Никакого markdown и пояснений.';
 
     const userMessage = `
+    ВАЖНО:
+- Все текстовые поля JSON должны быть НА РУССКОМ ЯЗЫКЕ.
+- Исключение: код (starterCode, примеры кода) — на языке программирования.
+
 Сгенерируй задачу для тренажёра.
 Тема: ${context.topic}
 Язык: ${context.language}
+Язык описания задачи: русский
 
 Ответ верни СТРОГО в формате:
 
@@ -213,8 +220,8 @@ END_JSON
 `.trim();
 
     return [
-        { role: 'system' as const, content: systemMessage },
-        { role: 'user' as const, content: userMessage },
+        {role: 'system' as const, content: systemMessage},
+        {role: 'user' as const, content: userMessage},
     ];
 }
 
@@ -245,8 +252,8 @@ ${invalidText}
 `.trim();
 
     return lmStudioClient.createChatCompletion([
-        { role: 'system', content: repairSystemMessage },
-        { role: 'user', content: repairUserMessage },
+        {role: 'system', content: repairSystemMessage},
+        {role: 'user', content: repairUserMessage},
     ]);
 }
 
@@ -291,7 +298,7 @@ export async function generateTaskHandler(
 
         const lmStudioClient = createDefaultLmStudioClient();
 
-        const generatedTask = await generateTaskWithRetries(lmStudioClient, { topic, language });
+        const generatedTask = await generateTaskWithRetries(lmStudioClient, {topic, language});
 
         response.json(generatedTask);
     } catch (error: any) {
