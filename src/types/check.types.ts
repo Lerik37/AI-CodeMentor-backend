@@ -6,3 +6,5 @@ export type CheckResult = {
     fixes: string[];
     edgeCases: string[];
 };
+
+

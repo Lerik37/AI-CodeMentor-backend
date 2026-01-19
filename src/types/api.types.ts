@@ -14,3 +14,13 @@ export type CheckAnswerRequestBody = {
 };
 
 export type CheckAnswerResponseBody = CheckResult;
+
+export type GetSolutionRequestBody = {
+    task: Task;
+};
+
+export type GetSolutionResponseBody = {
+    code: string;
+    explanation: string;
+};
+

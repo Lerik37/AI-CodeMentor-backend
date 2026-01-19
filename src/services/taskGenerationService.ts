@@ -6,7 +6,7 @@ import {GenerateTaskRequestBody, GenerateTaskResponseBody} from '../types/api.ty
  * Извлекает JSON строго между маркерами BEGIN_JSON и END_JSON.
  * Это значительно стабилизирует парсинг ответов локальных моделей.
  */
-function extractMarkedJsonFromText(text: string): unknown {
+export function extractMarkedJsonFromText(text: string): unknown {
     const beginMarker = 'BEGIN_JSON';
     const endMarker = 'END_JSON';
 
