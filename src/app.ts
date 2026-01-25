@@ -8,7 +8,7 @@ dotenv.config();
 export function createApp(): Express {
     const application = express();
 
-    const allowedOrigin = process.env.CORS_ORIGIN ?? 'http://localhost:5176';
+    const allowedOrigin = process.env.CORS_ORIGIN ?? 'http://localhost:5174';
 
     application.use(
         cors({
