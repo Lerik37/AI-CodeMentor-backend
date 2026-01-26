@@ -77,7 +77,11 @@ END_JSON
 
 КРИТИЧЕСКИ ВАЖНО:
 - starterCode НЕ ДОЛЖЕН содержать реализацию решения.
-- starterCode должен быть ЗАГЛУШКОЙ (TODO или throw new Error("Not implemented")).
+- starterCode ДОЛЖЕН быть заглушкой ТОЛЬКО в виде комментария TODO.
+- В теле функции (или методов/класса) используй ТОЛЬКО:
+  {
+    // TODO
+  }
 - Запрещено использовать filter, map, reduce, циклы или любую логику решения в starterCode.
 - НЕ добавляй готовое решение в statement, constraints, examples, solutionOutline и testCases.
 `.trim();
